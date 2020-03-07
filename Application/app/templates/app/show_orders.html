@@ -1,0 +1,70 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>Your offers:</h2>
+{% if my_orders %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Notes</th>
+                <th>Person</th>
+                <th>Dates</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for order in my_orders%}
+            <tr>
+                <td>{{ order.location }}</td>
+                <td>{{ order.description }}</td>
+                <td>{{ order.author }}</td>
+                <td>{{ order.start_date }} - {{ order.end_date }}</td>
+            </tr>
+    {% endfor %}
+        </tbody>
+    </table>   
+    
+    {% if matchs %}
+    <p>
+        <br>
+        <h3>Hooray! You have a match</h3>
+        {% for match in matchs %}
+            Person: {{match.author}}, from: {{match.overlap_range.start}}, to: {{match.overlap_range.end}}
+        {% endfor %}
+    </p>
+    {% endif %}
+
+{% else %}
+    You don't have active offers. Time to create new one!
+{% endif %}
+
+<h2>Active offers</h2>
+{% if orders %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Notes</th>
+                <th>Person</th>
+                <th>Dates</th>
+                <th>Profile</th>
+            </tr>
+        </thead>
+        <tbody>
+    {% for order in orders%}
+            <tr>
+                <td>{{ order.location }}</td>
+                <td>{{ order.description }}</td>
+                <td>{{ order.author }}</td>
+                <td>{{ order.start_date }} - {{order.end_date }}</td>
+                <td><i class="fab fa-instagram"></i></td>
+            </tr>
+    {% endfor %}
+        </tbody>
+    </table>        
+{% else %}
+    Sorry, we don't have active offers
+{% endif %}
+
+{% endblock %}
