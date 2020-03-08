@@ -5,58 +5,62 @@
 
 <h2>Active offers</h2>
 {% if orders %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Location</th>
-                <th>Gender preferences</th>
-                <th>Person</th>
-                <th>Profile</th>
-                <th>Dates</th>
-                <th>Room</th>
-                <th></th>  
-            </tr>
-        </thead>
-        <tbody>
-    {% for order in orders%}
-            <tr>
-                <td>{{ order.location }}</td>
-                <td>
-                    {% if order.gender_preferences == 'male' %}
-                    <i class="fas fa-male fa-w6 fa-2x"></i>
-                    {% elif order.gender_preferences == 'female' %}
-                    <i class="fas fa-female fa-w6 fa-2x"></i>
-                    {% else %}
-                    <i class="fas fa-male fa-w6 fa-2x"></i>
-                    <i class="fas fa-female fa-w6 fa-2x"></i>
-                    {% endif %}
-                </td>
-                <td>
-                    {% if order.author.client.gender == 'male' %}
-                    <i class="fas fa-male fa-w6 fa-2x"></i>
-                    {% else %}
-                    <i class="fas fa-female fa-w6 fa-2x"></i>
-                    {% endif %}
-                    {{ order.author.username }}
-                </td>
-                <td><i class="fab fa-instagram"></i></td>
-                <td>{{ order.start_date }} - {{order.end_date }}</td>
-                <td>
-                    <a href="{{ order.room_url }}" target="_blank">
-                        <i class="fas fa-hotel"></i>
-                    </a>
-                </td>
-                <td>
-                    <a href="#">
-                        Make a deal
-                    </a>
-                </td>
-            </tr>
-    {% endfor %}
-        </tbody>
-    </table>        
+<div class="table-responsive">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Location</th>
+                    <th>Gender preferences</th>
+                    <th>Person</th>
+                    <th>Profile</th>
+                    <th>Dates</th>
+                    <th>Room</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders%}
+                <tr>
+                    <td>{{ order.location }}</td>
+                    <td>
+                        {% if order.gender_preferences == 'male' %}
+                        <i class="fas fa-male fa-w6 fa-2x"></i>
+                        {% elif order.gender_preferences == 'female' %}
+                        <i class="fas fa-female fa-w6 fa-2x"></i>
+                        {% else %}
+                        <i class="fas fa-male fa-w6 fa-2x"></i>
+                        <i class="fas fa-female fa-w6 fa-2x"></i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if order.author.client.gender == 'male' %}
+                        <i class="fas fa-male fa-w6 fa-2x"></i>
+                        {% else %}
+                        <i class="fas fa-female fa-w6 fa-2x"></i>
+                        {% endif %}
+                        {{ order.author.username }}
+                    </td>
+                    <td><i class="fab fa-instagram"></i></td>
+                    <td>{{ order.start_date }} - {{order.end_date }}</td>
+                    <td>
+                        <a href="{{ order.room_url }}" target="_blank">
+                            <i class="fas fa-hotel"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#">
+                            Make a deal
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% else %}
-    Sorry, we don't have active offers
+Sorry, we don't have active offers
 {% endif %}
 
 {% endblock %}

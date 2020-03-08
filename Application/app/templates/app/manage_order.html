@@ -6,41 +6,43 @@
 {% if my_orders %}
 
 <h2>Your offers:</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Location</th>
-            <th>Notes</th>
-            <th>Person</th>
-            <th>Gender preferences</th>
-            <th>Dates</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for order in my_orders%}
-        <tr>
-            <td>{{ order.location }}</td>
-            <td>{{ order.description }}</td>
-            <td>{{ order.author }}</td>
-            <td>
-                <!--if 2-->
-                {% if order.gender_preferences == 'male' %}
-                <i class="fas fa-male fa-w6 fa-2x"></i>
-                {% elif order.gender_preferences == 'female' %}
-                <i class="fas fa-female fa-w6 fa-2x"></i>
-                {% else %}
-                <i class="fas fa-male fa-w6 fa-2x"></i>
-                <i class="fas fa-female fa-w6 fa-2x"></i>
-                <!--endif 2-->
-                {% endif %}
-            </td>
-            <td>{{ order.start_date }} - {{ order.end_date }}</td>
-            <td><a href="{% url 'cancel_order' order.id %}">Cancel</a></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Notes</th>
+                <th>Person</th>
+                <th>Gender preferences</th>
+                <th>Dates</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in my_orders%}
+            <tr>
+                <td>{{ order.location }}</td>
+                <td>{{ order.description }}</td>
+                <td>{{ order.author }}</td>
+                <td>
+                    <!--if 2-->
+                    {% if order.gender_preferences == 'male' %}
+                    <i class="fas fa-male fa-w6 fa-2x"></i>
+                    {% elif order.gender_preferences == 'female' %}
+                    <i class="fas fa-female fa-w6 fa-2x"></i>
+                    {% else %}
+                    <i class="fas fa-male fa-w6 fa-2x"></i>
+                    <i class="fas fa-female fa-w6 fa-2x"></i>
+                    <!--endif 2-->
+                    {% endif %}
+                </td>
+                <td>{{ order.start_date }} - {{ order.end_date }}</td>
+                <td><a href="{% url 'cancel_order' order.id %}">Cancel</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 <!--if 3-->
 {% if matchs %}
@@ -48,7 +50,7 @@
     <br>
     <h3>Hooray! You have a match</h3>
 </p>
-
+<div class="table-responsive">
     <table class="table">
         <thead>
             <tr>
@@ -70,6 +72,7 @@
             {% endfor %}
         </tbody>
     </table>
+</div>
 <!--endif 3-->
 {% endif %}
 
