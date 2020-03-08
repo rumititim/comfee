@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^manage_order', app.views.manage_order, name='manage_order'),
     url(r'^create_order', app.views.create_order, name='create_order'),
     url(r'^add_profile_info', app.views.add_profile_info, name='add_profile_info'),
+    url(r'^how_it_works', app.views.how_it_works, name='how_it_works'),
     path('cancel_order/<int:order_id>/', app.views.cancel_order, name='cancel_order'),
     url(r'^login/$',
         django.contrib.auth.views.LoginView,
