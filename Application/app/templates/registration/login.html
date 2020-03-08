@@ -10,4 +10,11 @@
   <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
+<div class="row">
+    Don't have account? 
+    <a href="{% url 'django_registration_register' %}">
+        Sing up
+    </a>
+</div>
+
 {% endblock %}

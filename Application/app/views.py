@@ -48,7 +48,10 @@ def about(request):
     )
 
 def show_orders(request):
-    orders = Order.objects.exclude(author=request.user)
+    if request.user.is_authenticated:
+        orders = Order.objects.exclude(author=request.user)
+    else:
+        orders = Order.objects.all()
     return render(
         request,
         'app/show_orders.html',
@@ -58,6 +61,8 @@ def show_orders(request):
     )
 
 def manage_order(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     orders = Order.objects.exclude(author=request.user)
     my_orders = Order.objects.filter(author=request.user)
     matchs = []
