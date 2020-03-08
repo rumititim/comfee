@@ -11,7 +11,7 @@ import app.forms
 import app.views
 
 # Uncomment the next lines to enable the admin:
-from django.conf.urls import include
+# from django.conf.urls import include
 from django.contrib import admin
 admin.autodiscover()
 
@@ -21,6 +21,10 @@ urlpatterns = [
     url(r'^contact$', app.views.contact, name='contact'),
     url(r'^about', app.views.about, name='about'),
     url(r'^show_orders', app.views.show_orders, name='show_orders'),
+    url(r'^manage_order', app.views.manage_order, name='manage_order'),
+    url(r'^create_order', app.views.create_order, name='create_order'),
+    url(r'^add_profile_info', app.views.add_profile_info, name='add_profile_info'),
+    path('cancel_order/<int:order_id>/', app.views.cancel_order, name='cancel_order'),
     url(r'^login/$',
         django.contrib.auth.views.LoginView,
         {
@@ -33,10 +37,10 @@ urlpatterns = [
             }
         },
         name='login'),
-    url(r'^logout$',
+    url(r'^logout/$',
         django.contrib.auth.views.LogoutView,
         {
-            'next_page': '/',
+            'next_page': '/'
         },
         name='logout'),
     path('accounts/', include('django_registration.backends.one_step.urls')),

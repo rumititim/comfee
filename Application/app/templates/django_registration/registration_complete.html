@@ -2,5 +2,30 @@
 {% load i18n %}
 
 {% block content %}
-<p>{% trans "You are now registered. Activation email sent." %}</p>
+<p>{% trans "It's almost done." %}</p>
+<p>{% trans "Please provide some additional information" %}</p>
+
+<form method="post" action="/add_profile_info/">
+    {% csrf_token %}
+    <p class="required">
+        <label class="required" for="gender">Gender:</label>
+        <input type="text" name="gender" maxlength="10" autofocus="" required="" id="gender">
+        <span class="helptext">
+            We need it to find the best matchs for you.
+        </span>
+    </p>
+    <p class="required">
+        <label class="required" for="social_url">
+            Your social page link:
+        </label>
+        <input type="text" name="social_url" maxlength="254" required="" id="social_url">
+        <span class="helptext">
+            People will need it to guess if they match you
+        </span>
+    </p>
+
+    <input type="submit" value="Submit">
+</form>
+
+
 {% endblock %}

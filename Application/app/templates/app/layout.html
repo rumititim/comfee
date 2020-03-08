@@ -8,7 +8,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/multistep-form.css' %}" />
     <link href="{% static 'app/fas/css/fontawesome.css' %}" rel="stylesheet">
     <link href="{% static 'app/fas/css/brands.css' %}" rel="stylesheet">
     <link href="{% static 'app/fas/css/solid.css' %}" rel="stylesheet">
@@ -28,7 +28,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'show_orders' %}">Offers</a></li>
+                    <li><a href="{% url 'manage_order' %}">Manage own</a></li>
+                    <li><a href="{% url 'show_orders' %}">Explore others</a></li>
                 </ul>
                 {% include 'app/loginpartial.html' %}
             </div>
@@ -40,7 +41,7 @@
             {% block content %}{% endblock %}
         <hr/>
         <footer>
-            <p>&copy; {{ year }} - Startup Weekend Prague</p>
+            <p>&copy; 2020 - Startup Weekend Prague</p>
         </footer>
     </div>
 
@@ -49,6 +50,7 @@
     <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
     <script src="{% static 'app/scripts/bootstrap.js' %}"></script>
     <script src="{% static 'app/scripts/respond.js' %}"></script>
+    <script src="{% static 'app/scripts/multistep-form.js' %}"></script>
 {% block scripts %}{% endblock %}
 
 </body>

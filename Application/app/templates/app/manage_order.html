@@ -1,0 +1,223 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<!--if 1-->
+{% if my_orders %}
+
+<h2>Your offers:</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Location</th>
+            <th>Notes</th>
+            <th>Person</th>
+            <th>Gender preferences</th>
+            <th>Dates</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in my_orders%}
+        <tr>
+            <td>{{ order.location }}</td>
+            <td>{{ order.description }}</td>
+            <td>{{ order.author }}</td>
+            <td>
+                <!--if 2-->
+                {% if order.gender_preferences == 'male' %}
+                <i class="fas fa-male fa-w6 fa-2x"></i>
+                {% elif order.gender_preferences == 'female' %}
+                <i class="fas fa-female fa-w6 fa-2x"></i>
+                {% else %}
+                <i class="fas fa-male fa-w6 fa-2x"></i>
+                <i class="fas fa-female fa-w6 fa-2x"></i>
+                <!--endif 2-->
+                {% endif %}
+            </td>
+            <td>{{ order.start_date }} - {{ order.end_date }}</td>
+            <td><a href="{% url 'cancel_order' order.id %}">Cancel</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!--if 3-->
+{% if matchs %}
+<p>
+    <br>
+    <h3>Hooray! You have a match</h3>
+</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Person</th>
+                <th>Matching dates</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for match in matchs %}
+
+            <tr>
+                <td>{{match.author}}</td>
+                <td>from: {{match.overlap_range.start}}, to: {{match.overlap_range.end}}</td>
+                <td><a href="{% url 'about'%}">Make a deal</a></td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+<!--endif 3-->
+{% endif %}
+
+{% else %}
+<!--if 4-->
+{% if user.client.gender %}
+You don't have active offers. Time to create new one!<br>
+
+<div class="multisteps-form">
+    <!--progress bar-->
+    <div class="row">
+        <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
+            <div class="multisteps-form__progress">
+                <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">Trip
+                    Info</button>
+                <button class="multisteps-form__progress-btn" type="button" title="Address">Hotel info</button>
+                <button class="multisteps-form__progress-btn" type="button" title="Comments">Confirmation</button>
+            </div>
+        </div>
+    </div>
+    <!--form panels-->
+    <div class="row">
+        <div class="col-12 col-lg-8 m-auto">
+            <form class="multisteps-form__form" action="/create_order/" method="post" id="createform">
+                {% csrf_token %}
+                <!--single form panel-->
+                <div class="multisteps-form__panel shadow p-4 rounded bg-white js-active" data-animation="scaleIn">
+                    <h3 class="multisteps-form__title">Your Trip Info</h3>
+                    <div class="multisteps-form__content">
+                        <div class="form-row mt-4">
+                            <div class="col-12 col-sm-6">
+                                <input class="multisteps-form__input form-control" type="text" name="location"
+                                    placeholder="Location" />
+                            </div>
+                        </div>
+                        <div class="form-row mt-4">
+                            <div class="col-12 col-sm-6">
+                                <input class="multisteps-form__input form-control" type="date" name="start_date"
+                                    placeholder="Start date" />
+                            </div>
+                            <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                                <input class="multisteps-form__input form-control" type="date" name="end_date"
+                                    placeholder="End date" />
+                            </div>
+                        </div>
+
+                        <div class="button-row d-flex mt-4">
+                            <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
+                        </div>
+                    </div>
+                </div>
+                <!--single form panel-->
+                <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
+                    <h3 class="multisteps-form__title">Hotel Info</h3>
+                    <div class="multisteps-form__content">
+                        <div class="form-row mt-4">
+                            <div class="col">
+                                <input class="multisteps-form__input form-control" type="text" name="room_url"
+                                    placeholder="Booked room URL" />
+                            </div>
+                        </div>
+                        <div class="form-row mt-4">
+                            <div class="col">
+                                <input class="multisteps-form__input form-control" type="number" name="capacity"
+                                    placeholder="Capacity" />
+                            </div>
+                        </div>
+                        <div class="form-row mt-4">
+                            <select form="createform" id="gender_preferences" autofocus name="gender_preferences"
+                                placeholder="Grender preferences">
+                                <option value="male">male</option>
+                                <option value="female">female</option>
+                                <option value="no matter">no matter</option>
+                            </select>
+                        </div>
+
+                        <div class="button-row d-flex mt-4">
+                            <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
+                            <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
+                        </div>
+                    </div>
+                </div>
+                <!--single form panel-->
+
+                <!--single form panel-->
+                <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
+                    <h3 class="multisteps-form__title">Additional Comments</h3>
+                    <div class="multisteps-form__content">
+                        <div class="form-row mt-4">
+                            <textarea class="multisteps-form__textarea form-control" name="description"
+                                placeholder="Additional Comments and Requirements" form="createform"></textarea>
+                        </div>
+                        <div class="button-row d-flex mt-4">
+                            <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
+                            <button class="btn btn-success ml-auto" type="button" title="Send">Send</button>
+                            <input type="submit" value="Send">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+    {% else %}
+
+    <p>It's almost done.</p>
+    <p>Please provide some additional information</p>
+
+    <form method="post" action="/add_profile_info/">
+        {% csrf_token %}
+        <p class="required">
+            <label class="required" for="gender">Gender:</label>
+            <input type="text" name="gender" maxlength="10" autofocus="" required="" id="gender">
+            <span class="helptext">
+                We need it to find the best matchs for you.
+            </span>
+        </p>
+        <p class="required">
+            <label class="required" for="social_url">
+                Your social page link:
+            </label>
+            <input type="text" name="social_url" maxlength="254" required="" id="social_url">
+            <span class="helptext">
+                People will need it to guess if they match you
+            </span>
+        </p>
+
+        <input type="submit" value="Submit">
+    </form>
+
+
+    <!--endif 4-->
+    {% endif %}
+</div>
+
+
+{% endif %}
+
+
+
+
+
+</div>
+
+<!--endif 1-->
+{% endblock %}

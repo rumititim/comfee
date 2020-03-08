@@ -2,12 +2,12 @@
 Definition of views.
 """
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
 
-from app.models import Order
+from app.models import Order, Client
 
 def home(request):
     """Renders the home page."""
@@ -49,6 +49,16 @@ def about(request):
 
 def show_orders(request):
     orders = Order.objects.exclude(author=request.user)
+    return render(
+        request,
+        'app/show_orders.html',
+        {
+            'orders': orders,
+        }
+    )
+
+def manage_order(request):
+    orders = Order.objects.exclude(author=request.user)
     my_orders = Order.objects.filter(author=request.user)
     matchs = []
     if my_orders:
@@ -61,19 +71,41 @@ def show_orders(request):
                     matchs.append(order)
     return render(
         request,
-        'app/show_orders.html',
+        'app/manage_order.html',
         {
             'my_orders': my_orders,
-            'orders': orders,
             'matchs': matchs
         }
     )
 
 def create_order(request):
-    pass
+    order = Order.objects.create(
+        location = request.POST['location'],
+        author = request.user,
+        start_date = request.POST['start_date'],
+        end_date = request.POST['end_date'],
+        description = request.POST['description'],
+        gender_preferences = request.POST['gender_preferences'],
+        room_url = request.POST['room_url']
+    )
+    return redirect('manage_order')
 
+def add_profile_info(request):
+    try:
+        client = Client.objects.get(user=request.user)
+        client.gender = request.POST['gender']
+        client.save()
+    except Client.DoesNotExist:
+        Client.objects.create(
+            user = request.user,
+            gender = request.POST['gender']
+        )
 
+    return redirect('manage_order')
 
+def cancel_order(request, order_id):
+    order = Order.objects.filter(id=order_id).delete()
+    return redirect('manage_order')
 
 class TimeRange(object):
     def __init__(self, start, end):

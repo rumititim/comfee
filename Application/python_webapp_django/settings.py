@@ -130,3 +130,5 @@ STATIC_URL = '/static/'
 STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
 
 REGISTRATION_OPEN = True
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

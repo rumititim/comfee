@@ -2,42 +2,6 @@
 
 {% block content %}
 
-<h2>Your offers:</h2>
-{% if my_orders %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Location</th>
-                <th>Notes</th>
-                <th>Person</th>
-                <th>Dates</th>
-            </tr>
-        </thead>
-        <tbody>
-    {% for order in my_orders%}
-            <tr>
-                <td>{{ order.location }}</td>
-                <td>{{ order.description }}</td>
-                <td>{{ order.author }}</td>
-                <td>{{ order.start_date }} - {{ order.end_date }}</td>
-            </tr>
-    {% endfor %}
-        </tbody>
-    </table>   
-    
-    {% if matchs %}
-    <p>
-        <br>
-        <h3>Hooray! You have a match</h3>
-        {% for match in matchs %}
-            Person: {{match.author}}, from: {{match.overlap_range.start}}, to: {{match.overlap_range.end}}
-        {% endfor %}
-    </p>
-    {% endif %}
-
-{% else %}
-    You don't have active offers. Time to create new one!
-{% endif %}
 
 <h2>Active offers</h2>
 {% if orders %}
@@ -45,20 +9,48 @@
         <thead>
             <tr>
                 <th>Location</th>
-                <th>Notes</th>
+                <th>Gender preferences</th>
                 <th>Person</th>
-                <th>Dates</th>
                 <th>Profile</th>
+                <th>Dates</th>
+                <th>Room</th>
+                <th></th>  
             </tr>
         </thead>
         <tbody>
     {% for order in orders%}
             <tr>
                 <td>{{ order.location }}</td>
-                <td>{{ order.description }}</td>
-                <td>{{ order.author }}</td>
-                <td>{{ order.start_date }} - {{order.end_date }}</td>
+                <td>
+                    {% if order.gender_preferences == 'male' %}
+                    <i class="fas fa-male fa-w6 fa-2x"></i>
+                    {% elif order.gender_preferences == 'female' %}
+                    <i class="fas fa-female fa-w6 fa-2x"></i>
+                    {% else %}
+                    <i class="fas fa-male fa-w6 fa-2x"></i>
+                    <i class="fas fa-female fa-w6 fa-2x"></i>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if order.gender == 'male' %}
+                    <i class="fas fa-male fa-w6 fa-2x"></i>
+                    {% else %}
+                    <i class="fas fa-female fa-w6 fa-2x"></i>
+                    {% endif %}
+                    {{ order.author.first_name }} {{ order.author.last_name }}
+                </td>
                 <td><i class="fab fa-instagram"></i></td>
+                <td>{{ order.start_date }} - {{order.end_date }}</td>
+                <td>
+                    <a href="{{ order.room_url }}" target="_blank">
+                        <i class="fas fa-hotel"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="#">
+                        Make a deal
+                    </a>
+                </td>
             </tr>
     {% endfor %}
         </tbody>
