@@ -47,6 +47,12 @@ def about(request):
         }
     )
 
+def about_us(request):
+    return render(
+        request,
+        'app/about_us.html'
+    )
+
 def show_orders(request):
     if request.user.is_authenticated:
         orders = Order.objects.exclude(author=request.user)

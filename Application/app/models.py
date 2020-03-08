@@ -30,4 +30,4 @@ class Order(models.Model):
     ))
     start_date = models.DateField(default=datetime.now())
     end_date = models.DateField(default=datetime.now())
-    room_url = models.TextField(max_length=500)
+    room_url = models.TextField(max_length=500, blank=True, null=False)

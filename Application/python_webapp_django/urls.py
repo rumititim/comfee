@@ -19,6 +19,7 @@ urlpatterns = [
     # Examples:
     url(r'^$', app.views.home, name='home'),
     url(r'^contact$', app.views.contact, name='contact'),
+    url(r'^about_us', app.views.about_us, name='about_us'),
     url(r'^about', app.views.about, name='about'),
     url(r'^show_orders', app.views.show_orders, name='show_orders'),
     url(r'^manage_order', app.views.manage_order, name='manage_order'),
