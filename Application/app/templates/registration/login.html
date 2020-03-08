@@ -4,6 +4,9 @@
 {% block content %}
 <form method="post" action=".">
   {% csrf_token %} 
+
+<p>Please login in order to start working with Comfee</p>
+
   {{ form.as_p }}
 
   <input type="submit" value="{% trans 'Log in' %}" />
