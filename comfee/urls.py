@@ -1,5 +1,5 @@
 """
-Definition of urls for python_webapp_django.
+Definition of urls for comfee.
 """
 
 from datetime import datetime
